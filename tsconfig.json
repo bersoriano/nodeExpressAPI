@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "esnext", // Compile for latest JavaScript features (adjust based on browser support)
+    "module": "commonjs", // Module system (commonjs for Node.js, esnext for modern browsers)
+    "lib": ["dom", "dom.iterable", "esnext"], // Standard libraries to include
+    "allowJs": true, // Allow compiling JavaScript files along with TypeScript
+    "strict": true, // Enable strict type checking for better error detection
+    "noImplicitAny": true, // Disallow implicit `any` type assignments (enforces type safety)
+    "esModuleInterop": true, // Allow smooth interop between CommonJS and ES modules
+    "allowSyntheticDefaultImports": true, // Allow importing default exports from libraries without curly braces
+    "sourceMap": true, // Generate source maps for debugging
+    "baseUrl": "./src", // Base directory for resolving non-relative module paths (optional)
+    "outDir": "./dist",  // Output directory for compiled JavaScript files (optional)
+    "declaration": true, // Generate type declaration files (.d.ts) for external libraries (optional)
+    "experimentalDecorators": true, // Enable experimental support for decorators (if using)
+    "forceConsistentCasingInFileNames": true, // Enforce consistent casing for file names (optional)
+    "resolveJsonModule": true, // Allow importing JSON modules (optional)
+    "skipLibCheck": true, // Skip type checking of library files (if using many external libraries)
+  },
+  "include": ["src/**/*.ts"], // Include all TypeScript files in the "src" directory and subdirectories
+  "exclude": ["node_modules", "dist"] // Exclude files in "node_modules" and "dist" directories
+}
