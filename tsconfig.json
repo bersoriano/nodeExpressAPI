@@ -10,6 +10,7 @@
     "allowSyntheticDefaultImports": true, // Allow importing default exports from libraries without curly braces
     "sourceMap": true, // Generate source maps for debugging
     "baseUrl": "./src", // Base directory for resolving non-relative module paths (optional)
+    "rootDir": "./src",
     "outDir": "./dist",  // Output directory for compiled JavaScript files (optional)
     "declaration": true, // Generate type declaration files (.d.ts) for external libraries (optional)
     "experimentalDecorators": true, // Enable experimental support for decorators (if using)

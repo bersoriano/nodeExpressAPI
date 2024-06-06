@@ -1,36 +1,50 @@
 const getMessagesBtn = document.getElementById('getMessagesBtn');
 const messagesDiv = document.getElementById('messages');
 const addMessagesBtn = document.getElementById('addMessageBtn');
-var APIUrl = 'http://localhost:3000/messages';
+var APIUrl = 'http://localhost:3000/api/messages';
 
+function displayMessages (messages) {
+  messagesDiv.innerHTML = messages
+    .map(message => `<p>${message.id}: Content: ${message.content}</p>`)
+    .join('');
+}
 
-async function saveMessageToAPI(apiUrl, data) {
-    console.log('data to save:', data);
-    const response = await fetch(apiUrl, {
-      method: 'POST', // Set request method to POST
-      headers: { 'Content-Type': 'application/json' }, // Set content type header
-      body: JSON.stringify({data}), // Convert data to JSON string for the body
+async function fetchMessages () {
+  try {
+    const response = await fetch(APIUrl);
+    if (!response.ok) {
+      throw new Error(`API request failed with status ${response.status}`);
+    }
+    const data = await response.json();
+    displayMessages(data);
+  }
+  catch (error) {
+    console.error('Error fetching messages:', error);
+  }
+}
+
+async function saveMessageToAPI(message) {
+  try {
+    const response = await fetch(APIUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: message })
     });
     if (!response.ok) {
       throw new Error(`API request failed with status ${response.status}`);
     }
-    const responseBody = await response.json();
-    console.log('Message added:', responseBody);
+  } catch (error) {
+    console.error('Error saving message:', error);
+  }
 }
-getMessagesBtn.addEventListener('click', async () => {
-    const response = await fetch(APIUrl); // Replace with your API URL
-    const data = await response.json();
-    let messageList = '';
-    data.forEach(message => {
-      messageList += `<p>ID: ${message.id}, Content: ${message.content}</p>`;
-    });
-    messagesDiv.innerHTML = messageList;
-    console.log(messageList);
-});
+
+getMessagesBtn.addEventListener('click', fetchMessages);
+
 addMessagesBtn.addEventListener('click', async () => {
     const messageText = document.getElementById('inputMessage').value;
-    console.log('new message:', messageText)
-    saveMessageToAPI(APIUrl, messageText)
-      .then(() => console.log('Message sent successfully!'))
-      .catch(error => console.error('Error:', error));
+    if (messageText) {
+      saveMessageToAPI(messageText);
+    } else {
+      console.error('Message content is empty');
+    }
 });
