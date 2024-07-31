@@ -1,17 +1,33 @@
 const getMessagesBtn = document.getElementById('getMessagesBtn');
 const messagesDiv = document.getElementById('messages');
 const addMessagesBtn = document.getElementById('addMessageBtn');
-var APIUrl = 'http://localhost:3000/api/messages';
+const zippopotamBtn = document.getElementById('zippopotamBtn');
+let newCountry = {};
+const APIUrl = 'http://localhost:3000/v1/countries';
+
+const getCountryDetails = async(country, zipcode) => {
+  try {
+    const response  = await fetch(`http://api.zippopotam.us/${country}/${zipcode}`);
+    if (!response.ok) {
+      throw new Error(`API request failed with status ${response.status}`);
+    }
+    const countryDetails = await response.json();
+    return countryDetails;
+  }
+  catch (error) {
+    console.error('Error fetching zippo:', error);
+  }
+}
 
 const displayMessages = (messages) => {
   messagesDiv.innerHTML = messages
-    .map(message => `<p>${message.id}: Content: ${message.content}</p>`)
+    .map(message => `<p>${message.id}: Country: ${message.country} Zip Code: ${message.postCode}</p>`)
     .join('');
 }
 
 const fetchMessages = async() => {
   try {
-    const response = await fetch(APIUrl);
+    const response = await fetch('http://localhost:3000/v1/countries');
     if (!response.ok) {
       throw new Error(`API request failed with status ${response.status}`);
     }
@@ -23,12 +39,12 @@ const fetchMessages = async() => {
   }
 }
 
-const saveMessageToAPI = async(message) => {
+const saveCountryToAPI = async(countryDetails) => {
   try {
     const response = await fetch(APIUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ content: message })
+      body: JSON.stringify({countryDetails})
     });
     if (!response.ok) throw new Error(`API request failed with status ${response.status}`);
   } catch (error) {
@@ -38,13 +54,10 @@ const saveMessageToAPI = async(message) => {
 
 getMessagesBtn.addEventListener('click', fetchMessages);
 
-addMessagesBtn.addEventListener('click', async () => {
-    const messageText = document.getElementById('inputMessage').value;
-    if (messageText) {
-      saveMessageToAPI(messageText).then(() => {
-        inputMessage.value = ''; // Clear input field after adding the message
-      });
-    } else {
-      console.error('Message content is empty');
-    }
-});
+zippopotamBtn.addEventListener('click', async() => {
+  const countryCode = document.getElementById('country').value;
+  const zipcode = document.getElementById('zipcode').value;
+  const countryDetails = await getCountryDetails(countryCode, zipcode);
+  console.log("countryDetails", countryDetails);
+  saveCountryToAPI(countryDetails);
+})

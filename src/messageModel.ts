@@ -1,9 +1,39 @@
-export interface Message {
-    id: number;
-    content: string;
-  }
+export interface Country {
+  id: number;
+  name: string,
+  zipcode: number;
+}
 
-export const messages: Message[] = [
-    { id: 1, content: 'Hello from message 1' },
-    { id: 2, content: 'This is message number 2' },
+export interface Location {
+  id: number;
+  'post code': string;
+  country: string;
+  'country abbreviation': string;
+  places: Place[];
+}
+
+export interface Place {
+  'place name': string;
+  longitude: string;
+  state: string;
+  stateAbbreviation: string;
+  latitude: string;
+}
+
+export const countries: Location[] = [
+  {
+    id: 1,
+    'post code': "90210",
+    country: "United States",
+    'country abbreviation': "US",
+    places: [
+      {
+        'place name': "Beverly Hills",
+        longitude: "-118.4065",
+        state: "California",
+        stateAbbreviation: "CA",
+        latitude: "34.0901"
+      }
+    ]
+  }
 ];
