@@ -1,18 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="stylesheet" href="./styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>REST API Test</title>
 </head>
 <body>
-<button id="getMessagesBtn">Get Messages</button>
-<div id="messages"></div>
-<section>
-    <input type="text" id="country" placeholder="country"></input>
-    <input type="text" id="zipcode" placeholder="zipcode"></input>
-    <button id="zippopotamBtn">zippopotam</button>
-</section>
-<script src="script.js"></script>
+    <h1>Information of Places By Zip Code and Country </h1>
+    <section>
+        <select name="countries" id="countryCode"></select>
+        <input type="number" id="zipcode" placeholder="Zip Code"></input>
+        <button id="addCountryBtn" onclick="saveCountryToAPI()">Add Country</button>
+    </section>    
+    <div class="header grid-row">
+        <div class="grid-cell">Country</div>
+        <div class="grid-cell">Place</div>
+        <div class="grid-cell">Place</div>
+        <div class="grid-cell">Zip Code</div>
+        <div class="grid-cell">Actions</div>
+    </div> 
+    <div id="countriesContainer">     
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
