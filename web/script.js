@@ -1,113 +1,40 @@
 const API_BASE_URL = 'http://localhost:3000/v1';
 const COUNTRIES_ENDPOINT = `${API_BASE_URL}/countries`;
-const countries = [
-  { countryName: "Andorra", countryCode: "AD" },
-  { countryName: "Argentina", countryCode: "AR" },
-  { countryName: "American Samoa", countryCode: "AS" },
-  { countryName: "Austria", countryCode: "AT" },
-  { countryName: "Australia", countryCode: "AU" },
-  { countryName: "Bangladesh", countryCode: "BD" },
-  { countryName: "Belgium", countryCode: "BE" },
-  { countryName: "Bulgaria", countryCode: "BG" },
-  { countryName: "Brazil", countryCode: "BR" },
-  { countryName: "Canada", countryCode: "CA" },
-  { countryName: "Switzerland", countryCode: "CH" },
-  { countryName: "Czech Republic", countryCode: "CZ" },
-  { countryName: "Germany", countryCode: "DE" },
-  { countryName: "Denmark", countryCode: "DK" },
-  { countryName: "Dominican Republic", countryCode: "DO" },
-  { countryName: "Spain", countryCode: "ES" },
-  { countryName: "Finland", countryCode: "FI" },
-  { countryName: "Faroe Islands", countryCode: "FO" },
-  { countryName: "France", countryCode: "FR" },
-  { countryName: "Great Britain", countryCode: "GB" },
-  { countryName: "French Guyana", countryCode: "GF" },
-  { countryName: "Guernsey", countryCode: "GG" },
-  { countryName: "Greenland", countryCode: "GL" },
-  { countryName: "Guadeloupe", countryCode: "GP" },
-  { countryName: "Guatemala", countryCode: "GT" },
-  { countryName: "Guam", countryCode: "GU" },
-  { countryName: "Guyana", countryCode: "GY" },
-  { countryName: "Croatia", countryCode: "HR" },
-  { countryName: "Hungary", countryCode: "HU" },
-  { countryName: "Isle of Man", countryCode: "IM" },
-  { countryName: "India", countryCode: "IN" },
-  { countryName: "Iceland", countryCode: "IS" },
-  { countryName: "Italy", countryCode: "IT" },
-  { countryName: "Jersey", countryCode: "JE" },
-  { countryName: "Japan", countryCode: "JP" },
-  { countryName: "Liechtenstein", countryCode: "LI" },
-  { countryName: "Sri Lanka", countryCode: "LK" },
-  { countryName: "Lithuania", countryCode: "LT" },
-  { countryName: "Luxembourg", countryCode: "LU" },
-  { countryName: "Monaco", countryCode: "MC" },
-  { countryName: "Moldavia", countryCode: "MD" },
-  { countryName: "Marshall Islands", countryCode: "MH" },
-  { countryName: "Macedonia", countryCode: "MK" },
-  { countryName: "Northern Mariana Islands", countryCode: "MP" },
-  { countryName: "Martinique", countryCode: "MQ" },
-  { countryName: "Mexico", countryCode: "MX" },
-  { countryName: "Malaysia", countryCode: "MY" },
-  { countryName: "Holland", countryCode: "NL" },
-  { countryName: "Norway", countryCode: "NO" },
-  { countryName: "New Zealand", countryCode: "NZ" },
-  { countryName: "Phillippines", countryCode: "PH" },
-  { countryName: "Pakistan", countryCode: "PK" },
-  { countryName: "Poland", countryCode: "PL" },
-  { countryName: "Saint Pierre and Miquelon", countryCode: "PM" },
-  { countryName: "Puerto Rico", countryCode: "PR" },
-  { countryName: "Portugal", countryCode: "PT" },
-  { countryName: "French Reunion", countryCode: "RE" },
-  { countryName: "Russia", countryCode: "RU" },
-  { countryName: "Sweden", countryCode: "SE" },
-  { countryName: "Slovenia", countryCode: "SI" },
-  { countryName: "Svalbard & Jan Mayen Islands", countryCode: "SJ" },
-  { countryName: "Slovak Republic", countryCode: "SK" },
-  { countryName: "San Marino", countryCode: "SM" },
-  { countryName: "Thailand", countryCode: "TH" },
-  { countryName: "Turkey", countryCode: "TR" },
-  { countryName: "United States", countryCode: "US" },
-  { countryName: "Vatican", countryCode: "VA" },
-  { countryName: "Virgin Islands", countryCode: "VI" },
-  { countryName: "Mayotte", countryCode: "YT" },
-  { countryName: "South Africa", countryCode: "ZA" }
-];
+import {countries} from './countries.js';
 
 const fetchCountries = async() => {
   try {
-    const response = await fetch('http://localhost:3000/v1/countries');
+    const response = await fetch(COUNTRIES_ENDPOINT);
     if (!response.ok) {
       throw new Error(`API request failed with status ${response.status}`);
     }
     const data = await response.json();
-    renderCountries(data);
+    return data;
   }
   catch (error) {
     console.error('Error fetching messages:', error);
   }
 }
 
-const renderCountriesOptions= (countries) => {
+const renderCountryOptions= (countries) => {
   const selectCountriesDiv = document.getElementById('countryCode');
   selectCountriesDiv.innerHTML = countries
-  .map(country => `
-        <option data-countrycode=${country.countryCode}>${country.countryName}</option>
-      `)
-    .join('');
+  .map(country => `<option data-countrycode=${country.countryCode}>${country.countryName}</option>`)
+  .join('');
   selectCountriesDiv.addEventListener("change", (event) => { 
     const selectedOption = event.target.options[event.target.selectedIndex];
     console.log(selectedOption.getAttribute('data-countrycode'));
   })
 }
 
-const onAPIUpdated = () => {
-  console.log("API got updated!");
-  fetchCountries();
+const getCountries = async () => {
+  const countries = await fetchCountries();
+  renderCountries(countries);
 }
 
-const renderCountries = (messages) => {
+const renderCountries = (countries) => {
   const countriesListDiv = document.getElementById('countriesContainer');
-  countriesListDiv.innerHTML = messages
+  countriesListDiv.innerHTML = countries
   .map(message => `
     <div class="grid-row">
     <div class="grid-cell">${message.country}</div>
@@ -120,40 +47,48 @@ const renderCountries = (messages) => {
     </div>      
   `)
   .join('');
-  const deleteBtns =  document.getElementsByClassName('btn-delete');
-  Object.values(deleteBtns).forEach(button => {
-    button.addEventListener('click', async()=> { deleteCountryFromAPI(button.dataset.countryid) })
-  })
+  attachDeleteEventListeners();
 }
+
+function attachDeleteEventListeners() {
+  const deleteButtons = document.querySelectorAll('.btn-delete');
+  deleteButtons.forEach(button => {
+    button.addEventListener('click', () => deleteCountryFromAPI(button.dataset.countryid));
+  });
+}
+
+function attachAddCountryEventListeners() {
+  const addButton = document.querySelectorAll('#btn-addCountry')[0];
+  addButton.addEventListener('click', () => saveCountryToAPI());
+}
+
 
 const saveCountryToAPI = async() => {
   const countrySelect = document.getElementById('countryCode');
   const countryCode = countrySelect.options[countrySelect.selectedIndex].getAttribute('data-countrycode');
   const zipcode = document.getElementById('zipcode').value;
   try {
-    const response = await fetch(APIUrl, {
+    const response = await fetch(COUNTRIES_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ "country":  countryCode, "zip": zipcode })
+      body: JSON.stringify({ country: countryCode, zip: zipcode })
     });
     if (!response.ok) throw new Error(`API request failed with status ${response.status}`);
-    else {
-      onAPIUpdated();
-    }
+    await getCountries(); 
   } catch (error) {
     console.error('Error saving country:', error);
   }
 }
 
-const deleteCountryFromAPI = async(countyid) => {
+const deleteCountryFromAPI = async(countryId) => {
   try {
-    const response = await fetch(`http://localhost:3000/v1/countries/${countyid}`, {
+    const response = await fetch(`${COUNTRIES_ENDPOINT}/${countryId}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' }
     });
     if(!response.ok) throw new Error(`API request failed with status ${response.status}`);
     else {
-      onAPIUpdated();
+      getCountries();
     }
   }
   catch (error) {
@@ -161,9 +96,10 @@ const deleteCountryFromAPI = async(countyid) => {
   }
 }
 
-const onLoad = () => {
+const initializeApp = () => {
   console.log("App has started");
-  fetchCountries();
-  renderCountriesOptions(countries);
+  getCountries();
+  renderCountryOptions(countries);
+  attachAddCountryEventListeners();
 }
-onLoad()
+initializeApp()

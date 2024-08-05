@@ -10,11 +10,12 @@
 <title>REST API Test</title>
 </head>
 <body>
+    <script type="module" src="script.js"></script>
     <h1>Information of Places By Zip Code and Country </h1>
     <section>
         <select name="countries" id="countryCode"></select>
         <input type="number" id="zipcode" placeholder="Zip Code"></input>
-        <button id="addCountryBtn" onclick="saveCountryToAPI()">Add Country</button>
+        <button id="btn-addCountry">Add Country</button>
     </section>    
     <div class="header grid-row">
         <div class="grid-cell">Country</div>
@@ -25,6 +26,5 @@
     </div> 
     <div id="countriesContainer">     
     </div>
-    <script src="script.js"></script>
 </body>
 </html>
