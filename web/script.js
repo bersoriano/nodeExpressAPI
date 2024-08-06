@@ -33,7 +33,7 @@ const getCountries = async () => {
 }
 
 const renderCountries = (countries) => {
-  const countriesListDiv = document.getElementById('countriesContainer');
+  const countriesListDiv = document.getElementById('countries-container');
   countriesListDiv.innerHTML = countries
   .map(message => `
     <div class="grid-row">
@@ -42,7 +42,7 @@ const renderCountries = (countries) => {
     <div class="grid-cell">${message.places[0]['place name']}</div>
     <div class="grid-cell">${message['post code']}</div>
     <div class="grid-cell">
-      <button type="button" class="btn-delete" data-countryid="${message.id}" >Delete</button>
+      <button type="button" class="btn-delete" data-countryid="${message.id}" >Remove</button>
     </div>
     </div>      
   `)

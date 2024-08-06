@@ -12,19 +12,31 @@
 <body>
     <script type="module" src="script.js"></script>
     <h1>Information of Places By Zip Code and Country </h1>
+    <section class="country-selection">
+        <div class="column">
+            <label>Select a Country</label>
+            <select name="countries" id="countryCode"></select>
+        </div>
+        <div class="column">
+            <label>Enter a ZipCode</label>
+            <input type="number" id="zipcode" placeholder="Zip Code"></input>
+        </div>
+        <div class="column country">
+            <button id="btn-addCountry">Add Country</button>
+        </div>
+    </section>
     <section>
-        <select name="countries" id="countryCode"></select>
-        <input type="number" id="zipcode" placeholder="Zip Code"></input>
-        <button id="btn-addCountry">Add Country</button>
+        <h2>Countries list</h2>
     </section>    
-    <div class="header grid-row">
-        <div class="grid-cell">Country</div>
-        <div class="grid-cell">Place</div>
-        <div class="grid-cell">Place</div>
-        <div class="grid-cell">Zip Code</div>
-        <div class="grid-cell">Actions</div>
+    <div class="countries-header grid-row">
+        <div class="grid-cell">🌎 Country</div>
+        <div class="grid-cell">🗺️ State</div>
+        <div class="grid-cell">📍 Place</div>
+        <div class="grid-cell">🏙️ Zip Code</div>
+        <div class="grid-cell">⚙️ Actions</div>
     </div> 
-    <div id="countriesContainer">     
+    <div id="countries-container">     
     </div>
+    <footer>Designed and coded by @bersoriano with love in Austin, TX.</footer>
 </body>
 </html>

@@ -2,67 +2,102 @@ body {
     padding: 1rem;
     font-family: "Roboto", sans-serif;
     font-weight: 400;
-    font-style: normal;    
+    font-style: normal;
+    background-color: #03A9F4;
+    color: #ffffff;
+}
+
+h1,h2 {
+    font-weight: 400;
+    margin-top: 0;
+}
+
+input, select {
+    min-width: 150px;
+    max-width: 150px;
+    height: 2rem;
+    min-height: 2rem;
+    max-height: 2rem;
+    box-sizing: border-box;
+    padding: 0 1rem;
+    margin-right: 1rem;
+    border-radius: 5px;
+    margin: 1rem 1rem 1rem 0;
+    border: 1px solid #e0e0e0;    
 }
 
 button {
     min-width: 100px;
-    font-weight: 600;
-}
-
-button.btn-delete {
-}
-
-.header {
-    font-weight: 600;
-    /* margin: 1rem; */
-    background-color: silver;
-}
-
-#messages {
-    /* margin: 1rem; */
-}
-
-input, button, select {
-    height: 2rem;
-    min-height: 2rem;
-    margin: 1rem 0;
-    max-height: 2rem;
+    max-width: 100px;
+    height: 1.7rem;
+    min-height: 1.7rem;
     box-sizing: initial;
-    padding: 0 1rem;
-    margin-right: 1rem;    
+    border-radius: 5px;
+    border: 0;
+    color: #474747;
 }
 
-/* button {
-    height: 2rem;
-    min-height: 2rem;
-    margin: 1rem 0;
-} */
-
-.wrapper {
-    color: red;
-    background-color: pink;
-    border: 1px solid green;
-    display: grid;
-    grid-column: 1;
-    gap: 10px;
-    /* margin: 1rem; */
+#btn-addCountry{
+    background-color: #8effd3;
 }
 
-.cell {
-    grid-column: 1;
-    padding: 1rem;
+.btn-delete {
+    background-color: #ff8f8f;
+}
+
+.country-selection {
+    display: flex;
+    flex-direction: row;
+}
+
+.country-selection .country {
+    margin: auto 0 1rem;    
+}
+
+.countries-header.grid-row {
+    font-weight: 500;
+    margin-bottom: 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    background-color: white;
+}
+.countries-header.grid-row:hover{
+    opacity: 1;
+}
+
+#countries-container {
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    max-height: 50vh;
+    overflow-y: scroll;        
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
 }
 
 .grid-row {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    /* height: 100vh; Optional: to make the table fill the height of the viewport */
-    border: 1px solid silver;
+    border-bottom: 1px solid #ffffff;
     box-sizing: border-box;
+    background-color: #ffffffbd;
+    padding: 0 1rem;
+    color: #424242;
+    transition: .5s;
 }
+
+.grid-row:hover {
+    opacity: .8;
+}
+
 .grid-cell {
     padding: 1rem;
     display: flex;
     align-items: center;
+}
+
+footer {
+    margin: 2rem 0;
 }
