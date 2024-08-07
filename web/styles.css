@@ -3,7 +3,7 @@ body {
     font-family: "Roboto", sans-serif;
     font-weight: 400;
     font-style: normal;
-    background-color: #03A9F4;
+    background-color: #0c4661;
     color: #ffffff;
 }
 
@@ -29,16 +29,12 @@ input, select {
 button {
     min-width: 100px;
     max-width: 100px;
-    height: 1.7rem;
-    min-height: 1.7rem;
+    height: 30px;
+    min-height: 30px;
     box-sizing: initial;
     border-radius: 5px;
     border: 0;
     color: #474747;
-}
-
-#btn-addCountry{
-    background-color: #8effd3;
 }
 
 .btn-delete {
