@@ -1,10 +1,10 @@
-export interface Country {
+export type Country = {
   id: number;
   name: string,
   zipcode: number;
 }
 
-export interface Location {
+export type Location = {
   id: number;
   'post code': string;
   country: string;
@@ -12,7 +12,7 @@ export interface Location {
   places: Place[];
 }
 
-export interface Place {
+export type Place = {
   'place name': string;
   longitude: string;
   state: string;
@@ -20,7 +20,7 @@ export interface Place {
   latitude: string;
 }
 
-export const countries: Location[] = [
+export let countries: Location[] = [
   {
     id: 1,
     'post code': "90210",

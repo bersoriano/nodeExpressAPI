@@ -10,19 +10,18 @@ countryRoutes.use((req, res, next) => {
   next();
 });
 
-countryRoutes.get('/:country/:zip', async (req: Request, res: Response, next) => {
+countryRoutes.get('/:country/:zip', async (req: Request, res: Response) => {
   const { country, zip } = req.params;
-  const data = req.body;
   const url = `https://api.zippopotam.us/${country}/${zip}`;
   try {
-    const response = await axios.get(url);
-    res.json(response.data);
+    const {data} = await axios.get(url);
+    res.json(data);
   } catch (error) {
     res.status(500).json({ error: 'Error fetching data from Zippopotam.us' });
   }
 });
 
-countryRoutes.get('/countries/', async (req: Request, res: Response, next) => {
+countryRoutes.get('/countries', async (req: Request, res: Response, next) => {
   try {
     res.json(countries);
   } catch (error) {
@@ -30,16 +29,14 @@ countryRoutes.get('/countries/', async (req: Request, res: Response, next) => {
   }
 });
 
-countryRoutes.post('/countries/', async (req: Request, res: Response, next) => {
-  console.log('post req>>>', req);
+countryRoutes.post('/countries', async (req: Request, res: Response, next) => {
   const { country, zip } = req.body;
   if (!country || !zip) {
     return res.status(400).json({ error: 'Country and zip are required.' });
   }
   const url = `https://api.zippopotam.us/${country}/${zip}`;
   try {
-    const response = await axios.get(url);
-    const data = response.data;
+    const {data} = await axios.get(url);
     const newLocation: Location = {
       id: countries.length + 1,
       'post code': data['post code'],
@@ -60,19 +57,16 @@ countryRoutes.post('/countries/', async (req: Request, res: Response, next) => {
   }
 });
 
-countryRoutes.delete('/countries/:id', async (req: Request, res: Response, next) => {
-  const userIndex = countries.findIndex(l => l.id === parseInt(req.params.id));
-  if (userIndex !== -1) {
-    const deletedUser = countries.splice(userIndex, 1);
-    res.json(deletedUser);
+countryRoutes.delete('/countries/:id', async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id, 10);
+  const index = countries.findIndex((location) => location.id === id);
+  if (index !== -1) {
+    const [deletedLocation] = countries.splice(index, 1);
+    res.json(deletedLocation);
   }
   else {
     res.status(404).json({ error: 'User not found' });
   }
-});
-
-countryRoutes.get('/countries', (req: Request, res: Response) => {
-  res.json(countries);
 });
 
 export default countryRoutes;
