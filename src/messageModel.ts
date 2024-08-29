@@ -1,6 +1,6 @@
 export type Country = {
   id: number;
-  name: string,
+  name: string;
   zipcode: number;
 }
 

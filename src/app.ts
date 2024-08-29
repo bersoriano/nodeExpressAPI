@@ -1,15 +1,29 @@
-import express, {Application, Request, Response, NextFunction} from 'express';
+import express, {Application} from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import countryRoutes from './countryRoutes';
+import { ZipoppotamAdapter } from './ZipoppotamAdapter';
+import { createCountryService} from './countryService';
+import { createCountryRouter } from './countryRoutes';
+import { countries } from './messageModel';
+
 const app: Application = express();
 const port = process.env.PORT || 3000;
-app.use(bodyParser.json());
-app.use(express.json());
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-    console.error(err);
-    next();
-});
-app.use(cors());
-app.listen(port, () => {console.log(`Server listening on port ${port}`);});
-app.use('/v1/', countryRoutes);
+
+const setupMiddleware = (app:express.Application):void => {
+    app.use(bodyParser.json());
+    app.use(express.json());
+    app.use(cors());
+}
+const setupRoutes = (app:express.Application):void => {
+    const zipoppotamAdapter = new ZipoppotamAdapter();
+    const initialCountries =  countries;
+    const countryService = createCountryService(zipoppotamAdapter, initialCountries);
+    const countryRouter = createCountryRouter(countryService);
+    app.use('/v1/', countryRouter);
+}
+const startServer = (app:express.Application, port:number | string):void => {
+    app.listen(port, () => {console.log(`Server listening on port ${port}`);});
+}
+setupMiddleware(app);
+setupRoutes(app);
+startServer(app, port);
