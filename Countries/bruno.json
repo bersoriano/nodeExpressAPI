@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Countries",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

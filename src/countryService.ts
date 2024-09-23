@@ -21,13 +21,23 @@ export const createCountryService = (
     const getLocationData: GetLocationData = (country, zipcode) => zippopotamAdapter.getLocation(country, zipcode);
     const getAllCountries:GetAllCountries = async () => countries;
     const addLocation: AddLocation = async (country, zipcode) => {
-        const locationData = await zippopotamAdapter.getLocation(country, zipcode);
-        const newLocation = {
-            ...locationData,
-            id: Math.max(0, ...countries.map(c => c.id)) + 1,
+        try {
+            const locationData = await zippopotamAdapter.getLocation(country, zipcode);
+            if (!locationData) {
+                throw new Error('No data received from Zippopotam service');
+            }
+            const newLocation = {
+                ...locationData,
+                id: Math.max(0, ...countries.map(c => c.id)) + 1,
+            }
+            countries = [...countries, newLocation];
+            return newLocation;
+        } catch (error) {
+            if (error instanceof HttpError || error instanceof NotFoundError || error instanceof BadRequestError) {
+                throw error;
+            }
+            throw new HttpError(500, 'Failed to add location due to an unexpected error');
         }
-        countries = [...countries, newLocation];
-        return newLocation
     }
     const deleteLocation: DeleteLocation = async (id) => {
         const locationIndex = countries.findIndex(country => country.id === id);

@@ -29,11 +29,11 @@ export const createCountryRouter = (countryService: CountryService):Router => {
   const addLocation = async (req: Request, res: Response, next: NextFunction):Promise<void> => {
     try {
       const {country, zip} = req.body;
-      console.log("hey: ", country, zip);
       if (!country || !zip) {
         res.status(400).json({error: 'Country and zipcode are required'});
       }
       const newLocation = await countryService.addLocation(country, zip);
+      res.json(newLocation);
       res.status(201);
     }
     catch (error) {
